@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "spare",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}

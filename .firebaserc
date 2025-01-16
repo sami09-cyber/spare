@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "spare-89438": {
+      "hosting": {
+        "spare": [
+          "spare-89438"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "spare-89438"
+  }
+}
