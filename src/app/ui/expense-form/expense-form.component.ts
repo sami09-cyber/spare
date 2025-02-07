@@ -10,9 +10,6 @@ export class ExpenseFormComponent {
     description: '',
     amount: 0,
     category: '',
-    dueDate: '',
-    urgent: false,
-    important: false
   };
 
   categories = ['Food', 'Transport', 'Entertainment', 'Health', 'Education'];
