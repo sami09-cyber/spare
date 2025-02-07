@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-import { BalanceComponent } from './balance/balance.component';
-import { CalendarComponent } from './calendar/calendar.component';
-import { ExpenseFormComponent } from './expense-form/expense-form.component';
-import { UpcomingBillsComponent } from './upcoming-bills/upcoming-bills.component';
 import {FormsModule} from "@angular/forms";
+import {BalanceComponent} from "./components/balance/balance.component";
+import {CalendarComponent} from "./components/calendar/calendar.component";
+import {ExpenseFormComponent} from "./components/expense-form/expense-form.component";
+import {UpcomingBillsComponent} from "./components/upcoming-bills/upcoming-bills.component";
+import {LoginComponent} from "./components/login/login.component";
+import {SignupComponent} from "./components/signup/signup.component";
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import {FormsModule} from "@angular/forms";
     BalanceComponent,
     CalendarComponent,
     ExpenseFormComponent,
-    UpcomingBillsComponent
+    UpcomingBillsComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,

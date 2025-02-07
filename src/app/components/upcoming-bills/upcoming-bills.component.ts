@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {Bill} from "../models";
+import {Bill} from "../../models/models";
+
 
 @Component({
   selector: 'app-upcoming-bills',

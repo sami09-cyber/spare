@@ -14,6 +14,7 @@ export class LoginComponent implements OnDestroy {
   userSubscription: Subscription;
   email: string = '';
   password: string = '';
+  rememberMe: boolean = false;
 
 
   constructor(private authenticationService: AuthenticationService) {
@@ -23,16 +24,26 @@ export class LoginComponent implements OnDestroy {
   }
 
 
-  onLogin() {
-    try {
-      const user = this.authenticationService.signIn(this.email, this.password);
+  onLogin(email: string, password: string) {
+    const user = this.authenticationService.signIn(email, password);
+    console.log(user);
 
-      console.log(user);
 
-      // Navigate to the desired route after login
-    } catch (error) {
-      console.error('Login error:', error);
-    }
+    // try {
+    //   const user = this.authenticationService.signIn(email, password);
+    //
+    //   console.log(user);
+    //
+    //   // Navigate to the desired route after login
+    // } catch (error) {
+    //   console.error('Login error:', error);
+    // }
+  }
+
+  onSubmit() {
+    console.log('Email:', this.email, 'Password:', this.password, 'Remember Me:', this.rememberMe);
+
+    this.onLogin(this.email, this.password);
   }
 
 
