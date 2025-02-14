@@ -8,12 +8,14 @@ import {
   signInWithEmailAndPassword,
   signOut
 } from "@angular/fire/auth";
+import {addDoc, collection, collectionData, doc, Firestore, setDoc} from "@angular/fire/firestore";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  constructor(private auth: Auth, private router: Router) {}
+  constructor(private auth: Auth, private firestore: Firestore, private router: Router) {}
   signUp(email: string, password: string) {
     createUserWithEmailAndPassword(this.auth, email, password).then((userCredential) => {
       const user = userCredential.user;
@@ -73,4 +75,19 @@ export class AuthenticationService {
     return authState(this.auth);
   }
 
+  addData(collectionName: string, data: any) {
+    const collectionRef = collection(this.firestore, collectionName);
+    return addDoc(collectionRef, data);
+  }
+
+  setData(collectionName: string, documentId: string, data: any) {
+    const docRef = doc(this.firestore, collectionName, documentId);
+    return setDoc(docRef, data);
+  }
+
+
+  getData(collectionName: string): Observable<any[]> {
+    const collectionRef = collection(this.firestore, collectionName);
+    return collectionData(collectionRef, { idField: 'id' });
+  }
 }

@@ -1,0 +1,61 @@
+<div class="min-h-screen bg-gray-50">
+  <!-- Header -->
+  <header class="bg-white shadow">
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-bold text-gray-900">Features</h1>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Hero Section -->
+    <div class="bg-blue-700 text-white text-center py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+      <h2 class="text-base font-semibold uppercase tracking-wide">Comprehensive Cloud Cost Management</h2>
+      <p class="mt-1 text-4xl font-extrabold sm:text-5xl sm:tracking-tight lg:text-6xl">
+        Powerful Features to Optimize Your Cloud Spending
+      </p>
+      <p class="max-w-xl mt-5 mx-auto text-xl">
+        Discover how Spare can help you reduce costs, improve efficiency, and gain full visibility into your cloud expenses.
+      </p>
+    </div>
+
+    <!-- Feature Grid -->
+    <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:py-24 lg:px-8">
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-3">
+        <div *ngFor="let feature of features" class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div class="p-6">
+            <div class="flex items-center">
+              <div class="flex-shrink-0">
+                <i [class]="feature.icon + ' h-8 w-8 text-blue-500'"></i>
+              </div>
+              <div class="ml-4">
+                <h3 class="text-lg font-medium text-gray-900">{{ feature.title }}</h3>
+              </div>
+            </div>
+            <div class="mt-4">
+              <p class="text-base text-gray-500">{{ feature.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard Preview -->
+    <div class="bg-white text-center py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+      <h2 class="text-base font-semibold text-blue-600 tracking-wide uppercase">Intuitive Dashboard</h2>
+      <p class="mt-1 text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
+        Visualize Your Cloud Costs
+      </p>
+      <p class="max-w-xl mt-5 mx-auto text-xl text-gray-500">
+        Get a clear overview of your cloud spending with our easy-to-use dashboard.
+      </p>
+      <div class="mt-16">
+        <img
+          src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+          alt="Spare Dashboard Preview"
+          class="rounded-lg shadow-xl w-full"
+        />
+      </div>
+    </div>
+  </main>
+</div>

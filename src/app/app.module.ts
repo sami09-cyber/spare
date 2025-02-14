@@ -13,6 +13,8 @@ import {ExpenseFormComponent} from "./components/expense-form/expense-form.compo
 import {UpcomingBillsComponent} from "./components/upcoming-bills/upcoming-bills.component";
 import {LoginComponent} from "./components/login/login.component";
 import {SignupComponent} from "./components/signup/signup.component";
+import { HomeComponent } from './components/home/home.component';
+import { FeatureComponent } from './components/feature/feature.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import {SignupComponent} from "./components/signup/signup.component";
     ExpenseFormComponent,
     UpcomingBillsComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    HomeComponent,
+    FeatureComponent
   ],
   imports: [
     BrowserModule,

@@ -12,10 +12,10 @@ export class SignupComponent {
   private auth: Auth = inject(Auth);
   user$ = user(this.auth);
   formData = {
-    name: '',
+    lastName: '',
+    firstName: '',
     email: '',
     password: '',
-    confirmPassword: ''
   };
 
 

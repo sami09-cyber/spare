@@ -1,4 +1,4 @@
-import {Component, inject, OnDestroy} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../service/authentication.service";
 import {Auth, User, user} from "@angular/fire/auth";
 import {Subscription} from "rxjs";
@@ -8,7 +8,7 @@ import {Subscription} from "rxjs";
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent implements OnDestroy {
+export class LoginComponent implements OnDestroy, OnInit {
   private auth: Auth = inject(Auth);
   user$ = user(this.auth);
   userSubscription: Subscription;
@@ -23,21 +23,26 @@ export class LoginComponent implements OnDestroy {
     })
   }
 
+  ngOnInit() {
+    const data = { name: 'John Doe', age: 30 };
+    this.addData('users', data);
+    this.getData('users');
+  }
 
   onLogin(email: string, password: string) {
     const user = this.authenticationService.signIn(email, password);
     console.log(user);
+  }
 
+  getData(collectionName: string) {
+    const data = this.authenticationService.getData(collectionName).subscribe(data => console.log(data));
 
-    // try {
-    //   const user = this.authenticationService.signIn(email, password);
-    //
-    //   console.log(user);
-    //
-    //   // Navigate to the desired route after login
-    // } catch (error) {
-    //   console.error('Login error:', error);
-    // }
+    console.log('Les donnees: ', data);
+  }
+
+  addData(collectionName: string, data: any) {
+    this.authenticationService.addData(collectionName, data);
+    console.log('Data added successfully!');
   }
 
   onSubmit() {
@@ -45,7 +50,6 @@ export class LoginComponent implements OnDestroy {
 
     this.onLogin(this.email, this.password);
   }
-
 
   ngOnDestroy() {
     this.userSubscription.unsubscribe();
