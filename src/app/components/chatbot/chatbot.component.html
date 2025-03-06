@@ -1,0 +1,410 @@
+<!--&lt;!&ndash; Bouton de chat flottant lorsque le chat est fermé &ndash;&gt;-->
+<!--<button *ngIf="!isOpen" (click)="toggleChat()" class="fixed bottom-6 right-6 rounded-full w-14 h-14 shadow-lg bg-[#4339F2] hover:bg-[#4339F2]/90 flex items-center justify-center">-->
+<!--  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-white">-->
+<!--    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>-->
+<!--  </svg>-->
+<!--</button>-->
+
+<!--&lt;!&ndash; Fenêtre de chat &ndash;&gt;-->
+<!--<div *ngIf="isOpen" class="fixed bottom-6 right-6 w-80 md:w-96 shadow-xl transition-all duration-300 bg-white rounded-lg border" [ngClass]="{'h-16': isMinimized, 'h-[500px]': !isMinimized}">-->
+<!--  &lt;!&ndash; En-tête du chat &ndash;&gt;-->
+<!--  <div class="p-3 border-b flex items-center justify-between">-->
+<!--    <div class="flex items-center space-x-2">-->
+<!--      <div class="h-8 w-8 bg-primary rounded-full flex items-center justify-center">-->
+<!--        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-primary-foreground">-->
+<!--          <path d="M12 8V4H8"></path>-->
+<!--          <rect width="16" height="12" x="4" y="8" rx="2"></rect>-->
+<!--          <path d="M2 14h2"></path>-->
+<!--          <path d="M20 14h2"></path>-->
+<!--          <path d="M15 13v2"></path>-->
+<!--          <path d="M9 13v2"></path>-->
+<!--        </svg>-->
+<!--      </div>-->
+<!--      <div class="font-medium">Assistant SPARE</div>-->
+<!--    </div>-->
+<!--    <div class="flex items-center space-x-1">-->
+<!--      <button (click)="toggleChat()" class="h-8 w-8 flex items-center justify-center rounded-full hover:bg-gray-100">-->
+<!--        <svg *ngIf="isMinimized" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">-->
+<!--          <path d="m18 15-6-6-6 6"></path>-->
+<!--        </svg>-->
+<!--        <svg *ngIf="!isMinimized" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">-->
+<!--          <path d="m6 9 6 6 6-6"></path>-->
+<!--        </svg>-->
+<!--      </button>-->
+<!--      <button (click)="closeChat()" class="h-8 w-8 flex items-center justify-center rounded-full hover:bg-gray-100">-->
+<!--        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">-->
+<!--          <path d="M18 6 6 18"></path>-->
+<!--          <path d="m6 6 12 12"></path>-->
+<!--        </svg>-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; Contenu du chat (visible uniquement si non minimisé) &ndash;&gt;-->
+<!--  <ng-container *ngIf="!isMinimized">-->
+<!--    &lt;!&ndash; Zone des messages &ndash;&gt;-->
+<!--    <div #messagesContainer class="p-3 overflow-y-auto h-[380px]">-->
+<!--      &lt;!&ndash; Message de bienvenue si aucun message &ndash;&gt;-->
+<!--      <div *ngIf="messages.length === 0" class="flex flex-col items-center justify-center h-full text-center text-gray-500">-->
+<!--        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-12 w-12 mb-4 text-primary">-->
+<!--          <path d="M12 8V4H8"></path>-->
+<!--          <rect width="16" height="12" x="4" y="8" rx="2"></rect>-->
+<!--          <path d="M2 14h2"></path>-->
+<!--          <path d="M20 14h2"></path>-->
+<!--          <path d="M15 13v2"></path>-->
+<!--          <path d="M9 13v2"></path>-->
+<!--        </svg>-->
+<!--        <p class="text-sm">Bonjour ! Je suis votre assistant financier SPARE.</p>-->
+<!--        <p class="text-sm">Comment puis-je vous aider aujourd'hui ?</p>-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash; Liste des messages &ndash;&gt;-->
+<!--      <div *ngIf="messages.length > 0" class="space-y-4">-->
+<!--&lt;!&ndash;        <div *ngFor="let message of messages" class="flex" [ngClass]="{'justify-end': message.role === 'user', 'justify-start': message.role === 'assistant'}">&ndash;&gt;-->
+<!--&lt;!&ndash;          <div class="max-w-[80%] rounded-lg px-3 py-2 text-sm" [ngClass]="{'bg-primary text-white': message.role === 'user', 'bg-gray-100': message.role === 'assistant'}">&ndash;&gt;-->
+<!--&lt;!&ndash;            {{ message.content }}&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+
+<!--        <div *ngFor="let message of messages" class="flex items-start" [ngClass]="{'justify-end': message.role === 'user', 'justify-start': message.role === 'assistant'}">-->
+<!--          &lt;!&ndash; Icône pour l'assistant &ndash;&gt;-->
+<!--          <ng-container *ngIf="message.role === 'assistant'">-->
+<!--            <div class="mr-2">-->
+<!--              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-12 w-12 mb-4 text-blue-500">-->
+<!--                <path d="M12 8V4H8"></path>-->
+<!--                <rect width="16" height="12" x="4" y="8" rx="2"></rect>-->
+<!--                <path d="M2 14h2"></path>-->
+<!--                <path d="M20 14h2"></path>-->
+<!--                <path d="M15 13v2"></path>-->
+<!--                <path d="M9 13v2"></path>-->
+<!--              </svg>-->
+
+<!--&lt;!&ndash;              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">&ndash;&gt;-->
+<!--&lt;!&ndash;                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-2-2H5a2 2 0 01-2-2V5a2 2 0 01 2-2h14a2 2 0 012 2v9a2 2 0 01-2 2h-6l-2 2z" />&ndash;&gt;-->
+<!--&lt;!&ndash;              </svg>&ndash;&gt;-->
+<!--            </div>-->
+<!--          </ng-container>-->
+
+<!--          &lt;!&ndash; Contenu du message &ndash;&gt;-->
+<!--          <div class="max-w-[80%] rounded-lg px-3 py-2 text-sm" [ngClass]="{'bg-primary text-white': message.role === 'user', 'bg-gray-100 text-gray-800': message.role === 'assistant'}">-->
+<!--            {{ message.content }}-->
+<!--          </div>-->
+
+<!--          &lt;!&ndash; Icône pour l'utilisateur &ndash;&gt;-->
+<!--          <ng-container *ngIf="message.role === 'user'">-->
+<!--            <div class="ml-2">-->
+<!--              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-12 w-12 mb-4 text-gray-500">-->
+<!--                <path d="M12 8V4H8"></path>-->
+<!--                <rect width="16" height="12" x="4" y="8" rx="2"></rect>-->
+<!--                <path d="M2 14h2"></path>-->
+<!--                <path d="M20 14h2"></path>-->
+<!--                <path d="M15 13v2"></path>-->
+<!--                <path d="M9 13v2"></path>-->
+<!--              </svg>-->
+<!--            </div>-->
+<!--          </ng-container>-->
+
+<!--          &lt;!&ndash; Contenu du message &ndash;&gt;-->
+<!--          <div class="max-w-[80%] rounded-lg px-3 py-2 text-sm" [ngClass]="{'bg-primary text-white': message.role === 'user', 'bg-gray-100 text-gray-800': message.role === 'assistant'}">-->
+<!--            {{ message.content }}-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Indicateur de chargement &ndash;&gt;-->
+<!--        <div *ngIf="isLoading" class="flex justify-start">-->
+<!--          <div class="max-w-[80%] rounded-lg px-3 py-2 text-sm bg-gray-100">-->
+<!--            <div class="flex space-x-1">-->
+<!--              <div class="w-2 h-2 rounded-full bg-gray-400 animate-bounce"></div>-->
+<!--              <div class="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style="animation-delay: 0.2s"></div>-->
+<!--              <div class="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style="animation-delay: 0.4s"></div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Pied de page avec formulaire d'envoi &ndash;&gt;-->
+<!--    <div class="p-3 border-t">-->
+<!--      <form (ngSubmit)="sendMessage()" class="flex w-full space-x-2">-->
+<!--        <input [(ngModel)]="userInput" name="userInput" placeholder="Posez une question..." class="flex-grow px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary" [disabled]="isLoading">-->
+<!--        <button type="submit" class="p-2 bg-primary text-white rounded-md hover:bg-primary/90 disabled:opacity-50" [disabled]="isLoading || !userInput.trim()">-->
+<!--          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">-->
+<!--            <path d="m22 2-7 20-4-9-9-4Z"></path>-->
+<!--            <path d="M22 2 11 13"></path>-->
+<!--          </svg>-->
+<!--          <span class="sr-only">Envoyer</span>-->
+<!--        </button>-->
+<!--      </form>-->
+<!--    </div>-->
+<!--  </ng-container>-->
+<!--</div>-->
+
+
+
+
+<!-- Bouton de chat flottant lorsque le chat est fermé -->
+<button *ngIf="!isOpen"
+        (click)="toggleChat()"
+        class="fixed bottom-6 right-6 rounded-full w-14 h-14 shadow-lg bg-[#4339F2] hover:bg-[#4339F2]/90 flex items-center justify-center">
+  <svg xmlns="http://www.w3.org/2000/svg"
+       width="24"
+       height="24"
+       viewBox="0 0 24 24"
+       fill="none"
+       stroke="currentColor"
+       stroke-width="2"
+       stroke-linecap="round"
+       stroke-linejoin="round"
+       class="h-6 w-6 text-white">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+  </svg>
+</button>
+
+<!-- Fenêtre de chat -->
+<div *ngIf="isOpen"
+     class="fixed bottom-6 right-6 w-80 md:w-96 shadow-xl transition-all duration-300 bg-white rounded-lg border"
+     [ngClass]="{'h-16': isMinimized, 'h-[500px]': !isMinimized}">
+
+  <!-- En-tête du chat -->
+  <div class="p-3 border-b flex items-center justify-between bg-[#4339F2] text-white rounded-t-lg">
+    <div class="flex items-center space-x-2">
+      <div class="h-8 w-8 bg-white/10 rounded-full flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="24"
+             height="24"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             class="h-4 w-4">
+          <path d="M12 8V4H8"></path>
+          <rect width="16" height="12" x="4" y="8" rx="2"></rect>
+          <path d="M2 14h2"></path>
+          <path d="M20 14h2"></path>
+          <path d="M15 13v2"></path>
+          <path d="M9 13v2"></path>
+        </svg>
+      </div>
+      <div class="font-medium">Assistant SPARE</div>
+    </div>
+    <div class="flex items-center space-x-1">
+      <!-- Bouton Clear -->
+      <button (click)="clearChat()"
+              class="h-8 px-3 flex items-center justify-center rounded-full hover:bg-white/10 text-sm"
+              *ngIf="!isMinimized && messages.length > 0">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="16"
+             height="16"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             class="mr-1">
+          <path d="M3 6h18"></path>
+          <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+          <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+        </svg>
+        Clear
+      </button>
+      <!-- Bouton de minimisation/extension -->
+      <button (click)="toggleChat()"
+              class="h-8 w-8 flex items-center justify-center rounded-full hover:bg-white/10">
+        <svg *ngIf="isMinimized"
+             xmlns="http://www.w3.org/2000/svg"
+             width="24"
+             height="24"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             class="h-4 w-4">
+          <path d="m18 15-6-6-6 6"></path>
+        </svg>
+        <svg *ngIf="!isMinimized"
+             xmlns="http://www.w3.org/2000/svg"
+             width="24"
+             height="24"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             class="h-4 w-4">
+          <path d="m6 9 6 6 6-6"></path>
+        </svg>
+      </button>
+      <!-- Bouton de fermeture -->
+      <button (click)="closeChat()"
+              class="h-8 w-8 flex items-center justify-center rounded-full hover:bg-white/10">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="24"
+             height="24"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             class="h-4 w-4">
+          <path d="M18 6L6 18"></path>
+          <path d="M6 6L18 18"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Contenu du chat (visible uniquement si non minimisé) -->
+  <ng-container *ngIf="!isMinimized">
+    <!-- Zone des messages -->
+    <div #messagesContainer class="p-3 overflow-y-auto h-[380px] bg-gray-50">
+      <!-- Message de bienvenue si aucun message -->
+      <div *ngIf="messages.length === 0"
+           class="flex flex-col items-center justify-center h-full text-center text-gray-500">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="24"
+             height="24"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             class="h-12 w-12 mb-4 text-[#4339F2]">
+          <path d="M12 8V4H8"></path>
+          <rect width="16" height="12" x="4" y="8" rx="2"></rect>
+          <path d="M2 14h2"></path>
+          <path d="M20 14h2"></path>
+          <path d="M15 13v2"></path>
+          <path d="M9 13v2"></path>
+        </svg>
+        <p class="text-sm">Bonjour ! Je suis votre assistant financier SPARE.</p>
+        <p class="text-sm">Comment puis-je vous aider aujourd'hui ?</p>
+      </div>
+
+      <!-- Liste des messages -->
+      <div *ngIf="messages.length > 0" class="space-y-4">
+        <div *ngFor="let message of messages"
+             class="flex items-start space-x-2"
+             [ngClass]="{'flex-row-reverse space-x-reverse': message.role === 'user'}">
+          <!-- Avatar -->
+          <div class="flex-shrink-0">
+            <!-- Avatar de l'assistant -->
+            <div *ngIf="message.role === 'assistant'"
+                 class="h-8 w-8 rounded-full bg-[#4339F2]/10 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                   width="20"
+                   height="20"
+                   viewBox="0 0 24 24"
+                   fill="none"
+                   stroke="#4339F2"
+                   stroke-width="2"
+                   stroke-linecap="round"
+                   stroke-linejoin="round">
+                <path d="M12 8V4H8"></path>
+                <rect width="16" height="12" x="4" y="8" rx="2"></rect>
+                <path d="M2 14h2"></path>
+                <path d="M20 14h2"></path>
+                <path d="M15 13v2"></path>
+                <path d="M9 13v2"></path>
+              </svg>
+            </div>
+            <!-- Avatar de l'utilisateur -->
+            <div *ngIf="message.role === 'user'"
+                 class="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                   width="20"
+                   height="20"
+                   viewBox="0 0 24 24"
+                   fill="none"
+                   stroke="currentColor"
+                   stroke-width="2"
+                   stroke-linecap="round"
+                   stroke-linejoin="round">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Message -->
+          <div class="flex flex-col space-y-1 max-w-[75%]">
+            <div class="rounded-lg px-3 py-2 text-sm"
+                 [ngClass]="{'bg-[#4339F2] text-white': message.role === 'user',
+                             'bg-white shadow-sm border': message.role === 'assistant'}">
+              {{ message.content }}
+            </div>
+            <span class="text-xs text-gray-400"
+                  [ngClass]="{'text-right': message.role === 'user'}">
+              {{ formatTimestamp(message.timestamp) }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Indicateur de chargement -->
+        <div *ngIf="isLoading" class="flex items-start space-x-2">
+          <div class="h-8 w-8 rounded-full bg-[#4339F2]/10 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="20"
+                 height="20"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="#4339F2"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+              <path d="M12 8V4H8"></path>
+              <rect width="16" height="12" x="4" y="8" rx="2"></rect>
+              <path d="M2 14h2"></path>
+              <path d="M20 14h2"></path>
+              <path d="M15 13v2"></path>
+              <path d="M9 13v2"></path>
+            </svg>
+          </div>
+          <div class="bg-white shadow-sm border rounded-lg px-3 py-2">
+            <div class="flex space-x-1">
+              <div class="w-2 h-2 rounded-full bg-[#4339F2]/60 animate-bounce"></div>
+              <div class="w-2 h-2 rounded-full bg-[#4339F2]/60 animate-bounce" style="animation-delay: 0.2s"></div>
+              <div class="w-2 h-2 rounded-full bg-[#4339F2]/60 animate-bounce" style="animation-delay: 0.4s"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pied de page avec formulaire d'envoi -->
+    <div class="p-3 border-t bg-white">
+      <form (ngSubmit)="sendMessage()" class="flex w-full space-x-2">
+        <input [(ngModel)]="userInput"
+               name="userInput"
+               placeholder="Posez une question..."
+               class="flex-grow px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#4339F2] focus:border-transparent"
+               [disabled]="isLoading">
+        <button type="submit"
+                class="p-2 bg-[#4339F2] text-white rounded-md hover:bg-[#4339F2]/90 disabled:opacity-50 transition-colors"
+                [disabled]="isLoading || !userInput.trim()">
+          <svg xmlns="http://www.w3.org/2000/svg"
+               width="24"
+               height="24"
+               viewBox="0 0 24 24"
+               fill="none"
+               stroke="currentColor"
+               stroke-width="2"
+               stroke-linecap="round"
+               stroke-linejoin="round"
+               class="h-4 w-4">
+            <path d="m22 2-7 20-4-9-9-4Z"></path>
+            <path d="M22 2L11 13"></path>
+          </svg>
+          <span class="sr-only">Envoyer</span>
+        </button>
+      </form>
+    </div>
+  </ng-container>
+</div>

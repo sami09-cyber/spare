@@ -2,6 +2,7 @@ import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../service/authentication.service";
 import {Auth, User, user} from "@angular/fire/auth";
 import {Subscription} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -17,9 +18,9 @@ export class LoginComponent implements OnDestroy, OnInit {
   rememberMe: boolean = false;
 
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private authenticationService: AuthenticationService, private router: Router) {
     this.userSubscription = this.user$.subscribe((aUser: User | null) => {
-      console.log(aUser);
+      console.log('User Subscription', aUser);
     })
   }
 
@@ -30,8 +31,14 @@ export class LoginComponent implements OnDestroy, OnInit {
   }
 
   onLogin(email: string, password: string) {
-    const user = this.authenticationService.signIn(email, password);
-    console.log(user);
+    this.authenticationService.signIn(email, password).then(data => {
+      console.log(data)
+      if (!data.error) {
+        this.router.navigate(['/spare'])
+      } else {
+        this.router.navigate(['/login'])
+      }
+    })
   }
 
   getData(collectionName: string) {

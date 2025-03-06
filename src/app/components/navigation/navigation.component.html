@@ -1,0 +1,50 @@
+<nav class="bg-white shadow-sm">
+  <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16">
+      <div class="flex">
+        <div class="flex-shrink-0 flex items-center">
+          <span class="text-2xl font-bold text-blue-600">Spare</span>
+        </div>
+        <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+          <a routerLink="/" class="border-blue-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Home</a>
+          <a routerLink="/features" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Features</a>
+          <a routerLink="/pricing" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Pricing</a>
+          <a routerLink="/contact" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Contact</a>
+        </div>
+      </div>
+
+      <div class="hidden sm:ml-6 sm:flex sm:items-center">
+        <!-- Si l'utilisateur est connecté -->
+        <ng-container *ngIf="user; else guestLinks">
+          <div class="relative">
+            <button (click)="toggleDropdown()" class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border rounded-md shadow-sm hover:bg-gray-100 focus:outline-none" aria-haspopup="true" [attr.aria-expanded]="dropdownOpen ? 'true' : 'false'">
+              <svg class="h-5 w-5 text-gray-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
+              <span>{{ user.displayName }}</span>
+            </button>
+
+            <!-- Menu déroulant -->
+            <div *ngIf="dropdownOpen" class="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-md shadow-lg" role="menu">
+              <div class="px-4 py-3">
+                <p class="text-sm font-medium">{{ user.displayName }}</p>
+                <p class="text-xs text-gray-500">{{ user.email }}</p>
+              </div>
+              <hr class="border-gray-200" />
+              <a [routerLink]="'/dashboard'" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Dashboard</a>
+              <a [routerLink]="'/profile'" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Profile</a>
+              <a [routerLink]="'/settings'" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Settings</a>
+              <hr class="border-gray-200" />
+              <button (click)="onSignOut()" class="w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50" role="menuitem">Sign Out</button>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- Si l'utilisateur n'est pas connecté -->
+        <ng-template #guestLinks>
+          <div class="flex items-center gap-4">
+            <a [routerLink]="'/signup'" class="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#4339F2] hover:bg-[#4339F2]/90">Get Started</a>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</nav>

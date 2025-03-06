@@ -15,6 +15,18 @@ import {LoginComponent} from "./components/login/login.component";
 import {SignupComponent} from "./components/signup/signup.component";
 import { HomeComponent } from './components/home/home.component';
 import { FeatureComponent } from './components/feature/feature.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { SpareComponent } from './components/spare/spare.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { HeroComponent } from './components/hero/hero.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { AccountComponent } from './components/account/account.component';
+import { BankComponent } from './components/bank/bank.component';
+import { TransactionComponent } from './components/transaction/transaction.component';
+import { CallbackComponent } from './components/callback/callback.component';
+import {HttpClientModule} from "@angular/common/http";
+import { ChatbotComponent } from './components/chatbot/chatbot.component';
 
 @NgModule({
   declarations: [
@@ -26,10 +38,22 @@ import { FeatureComponent } from './components/feature/feature.component';
     LoginComponent,
     SignupComponent,
     HomeComponent,
-    FeatureComponent
+    FeatureComponent,
+    ForgotPasswordComponent,
+    SpareComponent,
+    NavigationComponent,
+    HeroComponent,
+    DashboardComponent,
+    FooterComponent,
+    AccountComponent,
+    BankComponent,
+    TransactionComponent,
+    CallbackComponent,
+    ChatbotComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     provideFirebaseApp(() => initializeApp({
       "projectId": "spare-89438",

@@ -2,6 +2,7 @@ import {Component, inject} from '@angular/core';
 import {AuthenticationService} from "../../service/authentication.service";
 import {Auth, user} from "@angular/fire/auth";
 import {Subscription} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-signup',
@@ -9,8 +10,6 @@ import {Subscription} from "rxjs";
   styleUrl: './signup.component.css'
 })
 export class SignupComponent {
-  private auth: Auth = inject(Auth);
-  user$ = user(this.auth);
   formData = {
     lastName: '',
     firstName: '',
@@ -18,17 +17,20 @@ export class SignupComponent {
     password: '',
   };
 
+  constructor(private authenticationService: AuthenticationService, private router: Router) {}
 
-  constructor(private authenticationService: AuthenticationService) {}
-
-  onSignup(email: string, password: string) {
-    const user = this.authenticationService.signUp(email, password);
-    console.error(user);
+  onSignup(lastName: string, firstName: string, email: string, password: string) {
+    this.authenticationService.signUp(lastName, firstName, email, password).then(data => {
+      console.log(data)
+      if (!data.error) {
+        this.router.navigate(['/spare'])
+      } else {
+        this.router.navigate(['/signup'])
+      }
+    });
   }
 
   onSubmit() {
-    console.log('Form Data:', this.formData);
-
-    this.onSignup(this.formData.email, this.formData.password);
+    this.onSignup(this.formData.lastName, this.formData.firstName, this.formData.email, this.formData.password);
   }
 }

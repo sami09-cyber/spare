@@ -1,0 +1,42 @@
+<div class="max-w-4xl mx-auto p-4">
+  <h1 class="text-2xl font-bold mb-6">Vos comptes bancaires</h1>
+
+  <!-- Loader -->
+  <div *ngIf="loading; else content" class="flex justify-center my-8">
+    <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+  </div>
+
+  <ng-template #content>
+    <!-- Message d'erreur -->
+    <div *ngIf="error" role="alert" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+      {{ error }}
+      <div class="mt-4">
+        <button (click)="reconnectBank()" class="px-4 py-2 bg-red-600 text-white rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500">Reconnecter ma banque</button>
+      </div>
+    </div>
+
+    <!-- Liste des comptes bancaires -->
+    <div *ngIf="accounts.length > 0" class="space-y-4">
+      <div *ngFor="let account of accounts" class="border rounded-lg p-4 hover:shadow-md transition-shadow">
+        <div class="flex justify-between items-center">
+          <div>
+            <h2 class="text-lg font-semibold">{{ account.name }}</h2>
+            <p class="text-gray-600 text-sm">IBAN: {{ account.iban }}</p>
+          </div>
+          <div class="text-right">
+            <p class="text-xl font-bold">{{ account.balance }} {{ account.currency }}</p>
+            <button (click)="viewTransactions(account.id)" class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500 text-sm">Voir les transactions</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Message si aucun compte bancaire -->
+    <div *ngIf="accounts?.length === 0 && !error" class="text-center py-8 text-gray-500">
+      Aucun compte bancaire trouvé
+      <div class="mt-4">
+        <button (click)="reconnectBank()" class="px-4 py-2 bg-indigo-600 text-white rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500">Reconnecter ma banque</button>
+      </div>
+    </div>
+  </ng-template>
+</div>
