@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BalanceComponent} from "./components/balance/balance.component";
 import {CalendarComponent} from "./components/calendar/calendar.component";
 import {ExpenseFormComponent} from "./components/expense-form/expense-form.component";
@@ -21,12 +21,9 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { HeroComponent } from './components/hero/hero.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { AccountComponent } from './components/account/account.component';
-import { BankComponent } from './components/bank/bank.component';
-import { TransactionComponent } from './components/transaction/transaction.component';
-import { CallbackComponent } from './components/callback/callback.component';
 import {HttpClientModule} from "@angular/common/http";
 import { ChatbotComponent } from './components/chatbot/chatbot.component';
+import { TransactionsComponent } from './components/transactions/transactions.component';
 
 @NgModule({
   declarations: [
@@ -45,11 +42,8 @@ import { ChatbotComponent } from './components/chatbot/chatbot.component';
     HeroComponent,
     DashboardComponent,
     FooterComponent,
-    AccountComponent,
-    BankComponent,
-    TransactionComponent,
-    CallbackComponent,
-    ChatbotComponent
+    ChatbotComponent,
+    TransactionsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,9 @@
+{
+  "/api": {
+    "target": "https://sandbox.plaid.com",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": { "^/api": "" }
+  }
+}

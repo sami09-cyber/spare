@@ -3,15 +3,6 @@ export interface AuthenticationResponse<T> {
   value: T | string;
 }
 
-export interface EnrichedAccount {
-  id: string
-  name: string
-  iban: string
-  balance: string
-  currency: string
-}
-
-
 export interface Bill {
   title: string;
   amount: number;
@@ -21,65 +12,84 @@ export interface Bill {
   important: boolean;
 }
 
-
-export const environment = {
-  production: false,
-  nordigenSecretId: "5c35d5ba-62f5-4341-9919-e0e1f66e5d28",
-  nordigenSecretKey: "9a13d308a7691b696de6e6a11731b962f4b1144ddb4e480346e0fb95e746c856fba9ce734e2598f291ec7b5c0fc8174df62c42a069070e75c2f4ce0afa99e76a",
-}
-
-// a : "live_Qi7ifSUZuN0iTbY0jVCfOGeh525UD70hYd19IuQ8"
-
-
-
-
-
-export interface NordigenToken {
-  access: string
-  access_expires: number
-  refresh: string
-  refresh_expires: number
-}
-
-export interface Institution {
-  id: string
-  name: string
-  logo: string
-  countries: string[]
-}
-
-export interface RequisitionResponse {
-  id: string
-  link: string
-  status: string
-}
-
-export interface Account {
-  id: string
-  iban: string
-  institution_id: string
-  status: string
-}
-
-export interface Transaction {
-  id: string
-  amount: string
-  bookingDate: string
-  valueDate: string
-  creditorName?: string
-  debtorName?: string
-  remittanceInformationUnstructured?: string
-}
-
-
-
-
 export interface Message {
   role: 'user' | 'assistant';
   content: string;
   timestamp: number;
 }
 
+
+export interface Transaction {
+  id: string
+  account_id: string
+  amount: number
+  date: string
+  name: string
+  category: string[]
+  category_id: string
+  pending: boolean
+  description?: string
+  priority?: "high" | "medium" | "low"
+  urgency?: "high" | "medium" | "low"
+}
+
+export interface TransactionResponse {
+  request_id: string
+  item: any
+  accounts: Account[]
+  total_transactions: number
+  transactions: Transaction[]
+}
+
+export interface LinkResponse {
+  requestId: string
+  publicToken: string
+}
+
+export interface ExchangeTokenResponse {
+  itemId: string
+  requestId: string
+  accessToken: string
+}
+
+export interface Balance {
+  available: number | null
+  current: number
+  iso_currency_code: string
+  limit: number | null
+  unofficial_currency_code: string | null
+}
+
+export interface Account {
+  account_id: string
+  balances: Balance
+  mask: string
+  name: string
+  official_name: string
+  subtype: string
+  type: string
+}
+
+export interface Item {
+  available_products: string[]
+  billed_products: string[]
+  error: any
+  institution_id: string
+  item_id: string
+  webhook: string
+}
+
+export interface BalanceResponse {
+  accounts: Account[]
+  item: Item
+  request_id: string
+}
+
+
+export const environment = {
+  plaidClientId: "67a5bd7ca0024d0022e46d8f",
+  plaidSecret: "07cd94d1d6103946d545aab067dca7"
+}
 
 
 export const predefinedResponses: { keywords: string[]; responses: string[] }[] = [
@@ -166,5 +176,4 @@ export const predefinedResponses: { keywords: string[]; responses: string[] }[] 
     ]
   }
 ]
-
 

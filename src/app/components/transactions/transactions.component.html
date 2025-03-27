@@ -1,0 +1,93 @@
+<div class="container mx-auto p-4">
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-3xl font-bold">Transactions</h1>
+    <div class="flex space-x-4">
+      <button (click)="loadTransactions()"  class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">Connect Your Compte</button>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="flex flex-col items-center justify-center my-8">
+    <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-blue-500"></div>
+    <p class="mt-4 text-gray-500">Loading transactions...</p>
+  </div>
+
+  <!-- Transactions Content -->
+  <div *ngIf="!isLoading">
+    <!-- Filters Section -->
+    <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div class="flex-1">
+        <label for="start-date" class="mb-1 text-sm font-medium text-gray-700">Search</label>
+        <input type="text" [(ngModel)]="search" name="search" placeholder="Search transactions..." class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300" >
+      </div>
+
+      <div class="flex flex-col md:flex-row md:items-center gap-4">
+        <div class="flex flex-col">
+          <label for="account-filter" class="mb-1 text-sm font-medium text-gray-700">Account:</label>
+          <select id="account-filter" [(ngModel)]="selectedAccount" name="selectedAccount" class="p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300">
+            <option value="all">All Accounts</option>
+            <option *ngFor="let account of accounts" [value]="account.account_id">{{ account.name }}</option>
+          </select>
+        </div>
+
+        <div class="flex flex-col md:flex-row md:space-x-4">
+          <div class="flex flex-col">
+            <label for="start-date" class="mb-1 text-sm font-medium text-gray-700">From:</label>
+            <input type="date" id="start-date" [(ngModel)]="startDate" name="startDate" class="p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300">
+          </div>
+          <div class="flex flex-col">
+            <label for="end-date" class="mb-1 text-sm font-medium text-gray-700">To:</label>
+            <input type="date" id="end-date" [(ngModel)]="endDate" name="endDate" class="p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-300">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Accounts Table -->
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white shadow rounded" *ngIf="accounts.length > 0">
+        <thead class="bg-gray-200">
+          <tr>
+          <th (click)="sortBy('account_id')" class="px-4 py-2 text-left cursor-pointer">
+            ID
+            <span *ngIf="sortField === 'date'" class="ml-1">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+          </th>
+          <th (click)="sortBy('name')" class="px-4 py-2 text-left cursor-pointer">
+            Available
+            <span *ngIf="sortField === 'name'" class="ml-1">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+          </th>
+          <th class="px-4 py-2 text-left">Current</th>
+            <th class="px-4 py-2 text-left">ISO</th>
+            <th class="px-4 py-2 text-left">Name</th>
+            <th class="px-4 py-2 text-left">Subtype</th>
+            <th class="px-4 py-2 text-left">Type</th>
+          <th (click)="sortBy('amount')" class="px-4 py-2 text-left cursor-pointer">
+            Name
+            <span *ngIf="sortField === 'amount'" class="ml-1">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+          </th>
+        </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <tr *ngFor="let account of accounts" class="hover:bg-gray-100">
+            <td class="px-4 py-2">{{ account.account_id }}</td>
+            <td class="px-4 py-2">{{ account.balances.available }}</td>
+            <td class="px-4 py-2">{{ account.balances.current }}</td>
+            <td class="px-4 py-2">{{ account.balances.iso_currency_code }}</td>
+            <td class="px-4 py-2">{{ account.balances.limit }}</td>
+            <td class="px-4 py-2">{{ account.name }}</td>
+            <td class="px-4 py-2">{{ account.subtype }}</td>
+            <td class="px-4 py-2">{{ account.type }}</td>
+<!--          <td class="px-4 py-2">{{ getAccountName(transaction.account_id) }}</td>-->
+<!--          <td class="px-4 py-2"><span *ngIf="transaction.category && transaction.category.length > 0">{{ transaction.category[0] }}</span></td>-->
+<!--          <td class="px-4 py-2" [ngClass]="{'text-red-500': transaction.amount > 0, 'text-green-500': transaction.amount < 0}">{{ transaction.amount | currency }}</td>-->
+        </tr>
+        </tbody>
+      </table>
+
+      <div *ngIf="accounts.length === 0" class="mt-6 text-center text-gray-500">
+        <p>No transactions found matching your filters.</p>
+      </div>
+    </div>
+  </div>
+</div>
