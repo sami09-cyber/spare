@@ -6,6 +6,10 @@ import { Component } from '@angular/core';
   styleUrl: './spare.component.css'
 })
 export class SpareComponent {
+  balance: number = 0;
 
+  updateBalance(newBalance: number): void {
+    this.balance = newBalance;
+  }
 }
 

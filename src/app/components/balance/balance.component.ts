@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-balance',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrl: './balance.component.css'
 })
 export class BalanceComponent {
-  balance = 1000.00;
+  @Input() balance: number = 0;
 }

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Bill} from "../../models/models";
+import {AuthenticationService} from "../../service/authentication.service";
 
 
 @Component({
@@ -7,27 +8,32 @@ import {Bill} from "../../models/models";
   templateUrl: './upcoming-bills.component.html',
   styleUrl: './upcoming-bills.component.css'
 })
-export class UpcomingBillsComponent {
-  bills: Bill[] = [
-    {
-      title: 'Rent',
-      amount: 1000,
-      category: 'Housing',
-      dueDate: '6/1/2023',
-      urgent: true,
-      important: true
-    },
-    {
-      title: 'Electricity',
-      amount: 50,
-      category: 'Utilities',
-      dueDate: '6/15/2023',
-      urgent: false,
-      important: true
-    }
-  ];
+export class UpcomingBillsComponent implements OnInit {
+  bills: any[] = []
 
-  markPaid(bill: Bill) {
-    this.bills = this.bills.filter(b => b !== bill);
+  constructor(private authenticationService: AuthenticationService) {}
+
+  ngOnInit() {
+    this.getData('expense');
+    console.log("Bills ", this.bills)
+  }
+
+
+  markPaid(id: string) {
+    this.deleteData('expense', id);
+    this.getData('expense');
+    // this.bills = this.bills.filter(b => b !== bill);
+  }
+
+  getData(collectionName: string) {
+    this.authenticationService.getData(collectionName).subscribe(data => {
+      console.log('Les donnees: ', data);
+
+      this.bills = data
+    });
+  }
+
+  deleteData(collectionName: string, id: string) {
+    this.authenticationService.deleteData(collectionName, id).then(r => console.log('Data deleted successfully! ', r));
   }
 }

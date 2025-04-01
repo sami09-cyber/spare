@@ -9,7 +9,7 @@ import {
   signInWithPopup,
   signOut, updateProfile, User
 } from "@angular/fire/auth";
-import {addDoc, collection, collectionData, doc, Firestore, getDoc, setDoc} from "@angular/fire/firestore";
+import {addDoc, collection, collectionData, deleteDoc, doc, Firestore, getDoc, setDoc} from "@angular/fire/firestore";
 import {Observable} from "rxjs";
 import {AuthenticationResponse} from "../models/models";
 
@@ -46,7 +46,6 @@ export class AuthenticationService {
       value: error.message
     }));
   }
-
 
   signInWithGoogle(): Promise<AuthenticationResponse<any>> {
     const provider = new GoogleAuthProvider();
@@ -172,5 +171,17 @@ export class AuthenticationService {
         error: true,
         value: error.message
     }));
+  }
+
+  deleteData(collectionName: string, id: string): Promise<AuthenticationResponse<string>> {
+    const documentRef = doc(this.firestore, collectionName, id);
+
+    return deleteDoc(documentRef).then(() => ({
+        error: false,
+        value: `Document ${id} supprime avec succes`
+      })).catch(error => ({
+        error: true,
+        value: error.message
+      }));
   }
 }

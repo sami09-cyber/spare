@@ -5,8 +5,8 @@
 
   <div class="">
     <div class="space-y-4">
-      <app-transactions></app-transactions>
-      <app-balance></app-balance>
+      <app-transactions (balanceEmise) = "updateBalance($event)"></app-transactions>
+      <app-balance [balance]="balance"></app-balance>
       <app-expense-form></app-expense-form>
       <app-upcoming-bills></app-upcoming-bills>
     </div>

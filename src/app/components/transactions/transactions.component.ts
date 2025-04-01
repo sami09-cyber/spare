@@ -1,12 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {
-  Account,
-  Balance,
-  ExchangeTokenResponse,
-  LinkResponse,
-  Transaction,
-  TransactionResponse
-} from "../../models/models";
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Account, Transaction, TransactionResponse} from "../../models/models";
 import {ApiPlaidService} from "../../service/api-plaid.service";
 
 @Component({
@@ -27,35 +20,13 @@ export class TransactionsComponent implements OnInit {
   transactions: Transaction[] = [];
   transactionsSaving: Transaction[] = [];
   total_transactions: number = 0
+  @Output() balanceEmise = new EventEmitter<any>();
 
   constructor(private apiPlaidService: ApiPlaidService) { }
 
   ngOnInit(): void {
     this.loadTransactions();
-    this.onAccountFilter(this.filter)
   }
-
-  // sortBy(field: string): void {
-  //   if (this.sortField === field) {
-  //     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-  //   } else {
-  //     this.sortField = field;
-  //     this.sortDirection = 'asc';
-  //   }
-  //
-  //   if(this.sortDirection == 'asc' && field == 'date') {
-  //     this.transactions = [...this.transactions].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-  //   } else {
-  //     this.transactions = [...this.transactions].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  //   }
-  //
-  //   if(this.sortDirection == 'asc' && field == 'amount') {
-  //     this.transactions = [...this.transactions].sort((a, b) => a.amount - b.amount);
-  //   } else {
-  //     this.transactions = [...this.transactions].sort((a, b) => b.amount - a.amount);
-  //   }
-  // }
-
 
   sortBy(field: 'date' | 'amount'): void {
     this.sortDirection = (this.sortField === field) ? (this.sortDirection === 'asc' ? 'desc' : 'asc') : 'asc';
@@ -109,6 +80,8 @@ export class TransactionsComponent implements OnInit {
           this.transactionsSaving = response.transactions
           this.accounts = response.accounts
           this.total_transactions = response.total_transactions
+          this.onAccountFilter(this.filter)
+          this.sendBalance()
           this.isLoading = false;
         },
         error: (error) => {
@@ -116,5 +89,10 @@ export class TransactionsComponent implements OnInit {
           this.isLoading = false;
         }
       });
+  }
+
+  sendBalance() {
+    const balance = this.transactionsSaving.reduce((acc, transaction) => acc + transaction.amount, 0);
+    this.balanceEmise.emit(balance);
   }
 }

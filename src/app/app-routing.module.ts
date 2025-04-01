@@ -18,7 +18,8 @@ const routes: Routes = [
   { path: 'features', component: FeatureComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'forgotPassword', component: ForgotPasswordComponent }
+  { path: 'forgotPassword', component: ForgotPasswordComponent },
+  { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({
