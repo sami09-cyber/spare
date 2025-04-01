@@ -3,8 +3,10 @@ import {Router} from "@angular/router";
 import {
   Auth,
   authState, confirmPasswordReset,
-  createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail,
+  createUserWithEmailAndPassword,
+  FacebookAuthProvider, GoogleAuthProvider, sendEmailVerification, sendPasswordResetEmail,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut, updateProfile, User
 } from "@angular/fire/auth";
 import {addDoc, collection, collectionData, doc, Firestore, getDoc, setDoc} from "@angular/fire/firestore";
@@ -15,7 +17,10 @@ import {AuthenticationResponse} from "../models/models";
   providedIn: 'root'
 })
 export class AuthenticationService {
+
+
   constructor(private auth: Auth, private firestore: Firestore, private router: Router) {}
+
 
   signUp(lastName: string, firstName: string, email: string, password: string): Promise<AuthenticationResponse<User>>{
     return createUserWithEmailAndPassword(this.auth, email, password).then((userCredential) => {
@@ -40,6 +45,53 @@ export class AuthenticationService {
       error: true,
       value: error.message
     }));
+  }
+
+
+  signInWithGoogle(): Promise<AuthenticationResponse<any>> {
+    const provider = new GoogleAuthProvider();
+
+    return signInWithPopup(this.auth, provider).then(result => ({
+        error: false,
+        value: {
+          token: GoogleAuthProvider.credentialFromResult(result)?.accessToken,
+          user: result.user
+        }
+      })).catch(error => ({
+        error: true,
+        value: {
+          errorCode: error.code,
+          errorMessage: error.message,
+          email: error.customData?.email,
+          credential: GoogleAuthProvider.credentialFromError(error)
+        }
+      })
+    );
+  }
+
+  signInWithFacebook(): Promise<AuthenticationResponse<any>> {
+    const provider = new FacebookAuthProvider();
+    provider.addScope('email');
+    provider.setCustomParameters({
+      display: 'popup'
+    });
+
+    return signInWithPopup(this.auth, provider).then(result => ({
+      error: false,
+      value: {
+        token: FacebookAuthProvider.credentialFromResult(result)?.accessToken,
+        user: result.user
+      }
+    })).catch(error => ({
+        error: true,
+        value: {
+          errorCode: error.code,
+          errorMessage: error.message,
+          email: error.customData?.email,
+          credential: FacebookAuthProvider.credentialFromError(error)
+        }
+      })
+    );
   }
 
   forgotPassword(email: string): Promise<AuthenticationResponse<void>>{

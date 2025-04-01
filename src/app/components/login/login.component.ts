@@ -3,6 +3,7 @@ import {AuthenticationService} from "../../service/authentication.service";
 import {Auth, User, user} from "@angular/fire/auth";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
+import {data} from "autoprefixer";
 
 @Component({
   selector: 'app-login',
@@ -38,6 +39,18 @@ export class LoginComponent implements OnDestroy, OnInit {
       } else {
         this.router.navigate(['/login'])
       }
+    })
+  }
+
+  onLoginWithGoogle() {
+    this.authenticationService.signInWithGoogle().then(data => {
+      console.log("Data: ", data)
+    })
+  }
+
+  onLoginWithFacebook() {
+    this.authenticationService.signInWithFacebook().then(data => {
+      console.log("Data: ", data)
     })
   }
 

@@ -1,62 +1,7 @@
-<!--<div class="min-h-screen flex items-center justify-center bg-gray-100">-->
-<!--  <div class="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-lg">-->
-<!--    <div class="text-center">-->
-<!--      <h2 class="mt-6 text-3xl font-bold text-gray-900">Welcome back</h2>-->
-<!--      <p class="mt-2 text-sm text-gray-600">Please sign in to your account</p>-->
-<!--    </div>-->
-<!--    <form class="mt-8 space-y-6" (submit)="onSubmit()">-->
-<!--      <div class="rounded-md shadow-sm -space-y-px">-->
-<!--        <div>-->
-<!--          <label for="email" class="sr-only">Email address</label>-->
-<!--          <input-->
-<!--            id="email"-->
-<!--            type="email"-->
-<!--            [(ngModel)]="email"-->
-<!--            name="email"-->
-<!--            required-->
-<!--            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"-->
-<!--            placeholder="Email address"-->
-<!--          />-->
-<!--        </div>-->
-<!--        <div>-->
-<!--          <label for="password" class="sr-only">Password</label>-->
-<!--          <input-->
-<!--            id="password"-->
-<!--            type="password"-->
-<!--            [(ngModel)]="password"-->
-<!--            name="password"-->
-<!--            required-->
-<!--            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"-->
-<!--            placeholder="Password"-->
-<!--          />-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="flex items-center justify-between">-->
-<!--        <div class="flex items-center">-->
-<!--          <input id="remember-me" type="checkbox" [(ngModel)]="rememberMe" name="rememberMe" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />-->
-<!--          <label for="remember-me" class="ml-2 block text-sm text-gray-900">Remember me</label>-->
-<!--        </div>-->
-<!--        <div class="text-sm">-->
-<!--          <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Forgot your password?</a>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div>-->
-<!--        <button-->
-<!--          type="submit"-->
-<!--          class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"-->
-<!--        >-->
-<!--          Sign in-->
-<!--        </button>-->
-<!--      </div>-->
-<!--    </form>-->
-<!--  </div>-->
-<!--</div>-->
-
-
-<div class="flex min-h-screen">
+<div class="flex h-screen overflow-hidden">
   <!-- Left Column -->
-  <div class="flex-1 flex flex-col p-8 lg:p-12 xl:p-16">
-    <div class="flex items-center gap-2 mb-12">
+  <div class="flex-1 flex flex-col justify-center p-8 lg:p-12 xl:p-16">
+    <div class="flex items-center gap-2 mb-8">
       <span class="text-5xl font-bold text-blue-600">Spare</span>
     </div>
 
@@ -66,7 +11,7 @@
         <p class="text-gray-500">Please enter login details below</p>
       </div>
 
-      <form (ngSubmit)="onSubmit()" class="space-y-6">
+      <form (ngSubmit)="onSubmit()" class="space-y-4">
         <div class="space-y-2">
           <label for="email" class="sr-only">Email address</label>
           <input id="email" type="email" [(ngModel)]="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-200" placeholder="Email address" />
@@ -87,19 +32,7 @@
           </div>
         </div>
 
-
-<!--        <div class="text-left">-->
-<!--          <div class="flex items-center">-->
-<!--            <input id="remember-me" type="checkbox" [(ngModel)]="rememberMe" name="rememberMe" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />-->
-<!--            <label for="remember-me" class="ml-2 block text-sm text-gray-900">Remember me</label>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--        <div class="text-right">-->
-<!--          <a href="/forgotPassword" class="text-sm text-gray-600 hover:underline">Forgot password?</a>-->
-<!--        </div>-->
-
-        <button type="submit" class="w-full bg-[#4339F2] hover:bg-[#4339F2]/90 text-white py-3 rounded-lg">Sign in </button>
+        <button type="submit" class="w-full bg-[#4339F2] hover:bg-[#4339F2]/90 text-white py-3 rounded-lg">Sign in</button>
 
         <div class="relative my-8">
           <div class="absolute inset-0 flex items-center">
@@ -110,27 +43,34 @@
           </div>
         </div>
 
-        <button class="w-full flex items-center justify-center gap-2 border border-gray-200 rounded-lg py-3 hover:bg-gray-50">
+        <button (click)="onLoginWithGoogle()" class="w-full flex items-center justify-center gap-2 border border-gray-200 rounded-lg py-3 hover:bg-gray-50">
           <img src="https://www.google.com/favicon.ico" alt="Google" class="w-5 h-5" />
           <span>Log in with Google</span>
         </button>
 
-        <button class="w-full flex items-center justify-center gap-2 border border-gray-200 rounded-lg py-3 hover:bg-gray-50">
+        <button (click)="onLoginWithFacebook()" class="w-full flex items-center justify-center gap-2 border border-gray-200 rounded-lg py-3 hover:bg-gray-50">
           <img src="https://www.facebook.com/favicon.ico" alt="Facebook" class="w-5 h-5" />
           <span>Log in with Facebook</span>
         </button>
 
-        <p class="text-center text-gray-500 mt-8"> Don't have an account? <a href="/signup" class="text-[#4339F2] hover:underline">Sign Up</a></p>
+        <p class="text-center text-gray-500 mt-8">
+          Don't have an account?
+          <a href="/signup" class="text-[#4339F2] hover:underline">Sign Up</a>
+        </p>
       </form>
     </div>
   </div>
 
   <!-- Right Column -->
-  <div class="hidden lg:flex lg:flex-1 bg-[#8B85FF]/20">
-    <div class="relative w-full h-full flex flex-col items-center justify-center p-12">
-      <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-rjiBYFSPXXttQtLWH3pIXKWS5JH5Fd.png" alt="Task Management Illustration" class="w-full max-w-2xl"  priority />
+  <div class="hidden lg:flex lg:flex-1 bg-[#8B85FF]/20 overflow-hidden">
+    <div class="relative w-full h-full flex flex-col items-center justify-center p-8">
+      <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-rjiBYFSPXXttQtLWH3pIXKWS5JH5Fd.png"
+           alt="Task Management Illustration"
+           class="w-full max-w-2xl max-h-screen object-contain" />
       <div class="absolute bottom-12 text-center">
-        <p class="text-xl text-gray-600 italic mb-4"> Manage your task in an easy and more efficient way with Tasky... </p>
+        <p class="text-xl text-gray-600 italic mb-4">
+          Manage your task in an easy and more efficient way with Tasky...
+        </p>
         <div class="flex gap-2 justify-center">
           <div class="w-2 h-2 rounded-full bg-white"></div>
           <div class="w-2 h-2 rounded-full bg-gray-300"></div>

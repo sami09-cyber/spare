@@ -20,17 +20,34 @@ export interface Message {
 
 
 export interface Transaction {
-  id: string
   account_id: string
+  account_owner: string | null
   amount: number
-  date: string
-  name: string
+  authorized_date: string | null
+  authorized_datetime: string | null
   category: string[]
   category_id: string
+  check_number: number | null
+  counterparties: any
+  date: string
+  datetime: string | null
+  iso_currency_code: string
+  location: any
+  logo_url: string
+  merchant_entity_id: string
+  merchant_name: string
+  name: string
+  payment_channel: string
+  payment_meta: any
   pending: boolean
-  description?: string
-  priority?: "high" | "medium" | "low"
-  urgency?: "high" | "medium" | "low"
+  pending_transaction_id: string | null
+  personal_finance_category: any
+  personal_finance_category_icon_url: string
+  transaction_code: string | null
+  transaction_id: string
+  transaction_type: string
+  unofficial_currency_code: string | null
+  website: string
 }
 
 export interface TransactionResponse {
