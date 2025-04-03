@@ -44,12 +44,12 @@
           </div>
         </div>
 
-        <button class="w-full flex items-center justify-center gap-2 border border-gray-200 rounded-lg py-3 hover:bg-gray-50">
+        <button (click)="onLoginWithGoogle()" class="w-full flex items-center justify-center gap-2 border border-gray-200 rounded-lg py-3 hover:bg-gray-50">
           <img src="https://www.google.com/favicon.ico" alt="Google" class="w-5 h-5" />
           <span>Log in with Google</span>
         </button>
 
-        <button class="w-full flex items-center justify-center gap-2 border border-gray-200 rounded-lg py-3 hover:bg-gray-50">
+        <button (click)="onLoginWithFacebook()" class="w-full flex items-center justify-center gap-2 border border-gray-200 rounded-lg py-3 hover:bg-gray-50">
           <img src="https://www.facebook.com/favicon.ico" alt="Facebook" class="w-5 h-5" />
           <span>Log in with Facebook</span>
         </button>

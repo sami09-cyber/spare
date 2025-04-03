@@ -30,6 +30,31 @@ export class SignupComponent {
     });
   }
 
+  onLoginWithGoogle() {
+    this.authenticationService.signInWithGoogle().then(data => {
+      console.log("Data: ", data)
+
+      if (!data.error) {
+        this.router.navigate(['/spare'])
+      } else {
+        this.router.navigate(['/login'])
+      }
+    })
+  }
+
+  onLoginWithFacebook() {
+    this.authenticationService.signInWithFacebook().then(data => {
+      console.log("Data: ", data)
+
+      if (!data.error) {
+        this.router.navigate(['/spare'])
+      } else {
+        this.router.navigate(['/login'])
+      }
+    })
+  }
+
+
   onSubmit() {
     this.onSignup(this.formData.lastName, this.formData.firstName, this.formData.email, this.formData.password);
   }

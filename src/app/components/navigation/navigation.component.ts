@@ -32,5 +32,4 @@ export class NavigationComponent {
     this.authenticationService.signOut().then(r => console.log(r));
     this.router.navigate(['/login']);
   }
-
 }

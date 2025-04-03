@@ -45,12 +45,24 @@ export class LoginComponent implements OnDestroy, OnInit {
   onLoginWithGoogle() {
     this.authenticationService.signInWithGoogle().then(data => {
       console.log("Data: ", data)
+
+      if (!data.error) {
+        this.router.navigate(['/spare'])
+      } else {
+        this.router.navigate(['/login'])
+      }
     })
   }
 
   onLoginWithFacebook() {
     this.authenticationService.signInWithFacebook().then(data => {
       console.log("Data: ", data)
+
+      if (!data.error) {
+        this.router.navigate(['/spare'])
+      } else {
+        this.router.navigate(['/login'])
+      }
     })
   }
 
