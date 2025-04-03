@@ -3,14 +3,7 @@
     {
       "target": "spare",
       "source": ".",
-      "frameworksBackend": {},
-      "public": "dist/spare",
-      "rewrites": [
-        {
-          "source": "/api/**",
-          "destination": "https://sandbox.plaid.com/**"
-        }
-      ]
+      "frameworksBackend": {}
     }
   ]
 }
